@@ -1,0 +1,17 @@
+export const CastData = [
+  { id: 1, 
+    pic: 'https://deadline.com/wp-content/uploads/2024/01/john-cena-wwe-retiring.jpg?w=681&h=383&crop=1', 
+    name: 'John Cene' },
+  { id: 2, 
+    pic: 'https://cdn.britannica.com/65/227665-050-D74A477E/American-actor-Leonardo-DiCaprio-2016.jpg?w=300', 
+    name: 'Leonardo Dicaprio' },
+  { id: 3, 
+    pic: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwGo45sqrJX5TTYlO4Y5a9csoqVQHLrM8rqQ&s', 
+    name: 'John Snow' },
+  { id: 4, 
+    pic: 'https://clickhole.com/wp-content/uploads/2018/04/gtixph4sl6bj249gsaxx.jpg', 
+    name: 'Dwayne Johnson' },
+  { id: 5, 
+    pic: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCJxyK4HI_eCtH-NfJCh03_lbOPWUrXqGAoA&s', 
+    name: 'Clame Clerk' },
+];

@@ -1,9 +1,10 @@
-// import { View, Text } from 'react-native'
+
 
 import React from 'react';
 import { Appbar, Switch } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { fontStyles } from '../../constants/Fonts';
 import { toggleTheme } from '../../store/slices/themeSlice';
 import { ModeText, ModeWrapper } from './styles';
 
@@ -23,7 +24,9 @@ const Header: React.FC = () => {
              <Appbar.Content title="Movie Mirror" 
              titleStyle={{
               color:"#c60030",
-              fontWeight:'900'}}/>
+              fontWeight:'900',
+              fontFamily:fontStyles.pacifico}}/>
+
 
               <ModeWrapper>
                 <ModeText
