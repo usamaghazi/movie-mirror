@@ -23,6 +23,8 @@ import {
   HeartPosition,
   InfoContainer,
   MovieInfoContainer,
+  NoReviews,
+  NoReviewsText,
   // NoReviews,
   // NoReviewsText,
   PlayButtonContainer,
@@ -45,6 +47,11 @@ const MovieScreen = () => {
   
   const { selectedMovie } = useSelector((state:RootState) => state.movie)
   const { colors } = useSelector((state:RootState) => state.theme)
+  const { userReview } = useSelector((state:RootState) => state.form)
+  
+  const filterReviews = userReview.length > 0 ?  userReview.filter(review =>{
+      return review.movieName === selectedMovie?.title
+  }): []
 
   const router = useRouter()
 
@@ -128,8 +135,30 @@ const MovieScreen = () => {
                 No Reviews Yet
               </NoReviewsText>
              </NoReviews> */}
-              <ReviewCard/>
-              <ReviewCard/>
+              {/* <ReviewCard/>
+              <ReviewCard/> */}
+
+              {
+                filterReviews.length > 0 ? (
+                  filterReviews.map((review,index) => (
+                    <ReviewCard
+                    key={index}
+                    userName={review.name}
+                    userImage={review.selectedImage}
+                    userReview={review.review}
+                    stars={review.reviewStars}
+                    date={review.date}
+                    index={index}/>
+                  ))
+                ):(
+                  <NoReviews>
+                    <NoReviewsText
+                      nullReview={colors.textDisabled}>
+                        No Reviews Yet
+                    </NoReviewsText>
+                  </NoReviews>
+                )
+              }
           </AboutContainer>
 
           <MovieInfoContainer>

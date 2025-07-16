@@ -10,7 +10,9 @@ const Input:React.FC<InputProps> = ({
     height,
     placeholder,
     onChangeText,
-    value
+    value,
+    emptyName = false,
+    emptyReview = false,
  }) => {
     const { colors } = useSelector((state:RootState) => state.theme)
   return (
@@ -27,6 +29,9 @@ const Input:React.FC<InputProps> = ({
         border={colors.borderDark}
         height={height}
         text={colors.text}
+        nullishName={emptyName}
+        nullishReview={emptyReview}
+        borderWarn={colors.buttonDanger}
         />
     </InputContainer>
   )

@@ -21,5 +21,9 @@ export const InputText = styled.TextInput<InputStyleProps>(props => ({
     textAlignVertical: 'top',
     fontSize: 16,
     borderRadius:7,
-    marginTop:10
+    marginTop:10,
+
+    ...(props.nullishName || props.nullishReview ? {
+        borderColor:props.borderWarn
+    } : {})
 }))

@@ -1,7 +1,11 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../store'
+import { useAppDispatch } from '../../store'
+import { deleteUserReview } from '../../store/slices/formSlice'
+import { ReviewCardProps } from '../../types'
 import {
   PersonalInfo,
   Picture,
@@ -13,58 +17,75 @@ import {
   UserName
 } from './styles'
 
-const profilePic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO17hg6KvLlweeZWN0LCEdi-OXM9qGpbQ9w&s'
 
-const ReviewCard = () => {
+const ReviewCard:React.FC <ReviewCardProps> = ({
+  userName,
+  userReview,
+  userImage,
+  date,
+  stars,
+  index
+}) => {
 
     const { colors } = useSelector((state:RootState) => state.theme)
-    const today = new Date();
+    
+    const dispatch = useAppDispatch();
 
-    function formatDate(date: Date): string {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() returns 0-11
-  const year = date.getFullYear();
-  
-  return `${day}/${month}/${year}`;
-}
+    function formatDate(date: string): string {
+      const dateObj = new Date(date);
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0'); 
+      const year = dateObj.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
+    const removeReview = (index:number) => {
+        dispatch(deleteUserReview(index))
+    }
     
   return (
     <ReviewCardContainer>
         <ReviewCardInfo>
           <PersonalInfo>
             <Picture
-            source={{uri:profilePic}}
+            source={{uri:userImage}}
             resizeMode={'cover'}/>
             <UserName
             userName={colors.text}>
-                Mr Chips
+                {userName}
             </UserName>
           </PersonalInfo>
+
+          <TouchableOpacity onPress={()=>removeReview(index)}>
           <Ionicons 
           name="trash" 
           color={colors.buttonDanger} 
           size={18}/>
+          </TouchableOpacity>
+
         </ReviewCardInfo>
         <RateDateContainer>
             <StarsContainer>
-                {[1, 2, 3, 4, 5].map(star => (
-                <Ionicons key={star} name="star" size={15} color="#FFD700" />
+                {stars.map((star,index) => (
+                <Ionicons 
+                key={index} 
+                name={star as keyof typeof Ionicons.glyphMap} 
+                size={15} 
+                color="#FFD700" />
                 ))}
             </StarsContainer>
             <ReviewDate
             dateText={colors.textSecondary}>
-                {formatDate(today)}
+                {formatDate(date)}
             </ReviewDate>
         </RateDateContainer>
         <ReviewText
         reviewTextColor={colors.textSecondary}>
-            A masterfully crafted film that stays with you long after the credits roll.
-            This movie delivers on every level - stunning visuals, compelling storytelling, and outstanding performances.
-            A rare gem that perfectly balances entertainment with meaningful storytelling.
-            An absolute triumph that showcases the power of cinema at its finest.
+            {userReview}
         </ReviewText>
     </ReviewCardContainer>
   )
 }
 
 export default ReviewCard
+
