@@ -93,7 +93,8 @@ export const lightTheme = {
   overlay: 'rgba(0, 0, 0, 0.5)',   // Modal overlay
   overlayLight: 'rgba(0, 0, 0, 0.3)', // Light overlay
   overlayDark: 'rgba(0, 0, 0, 0.7)',
-  title:'#c60030'
+  title:'#c60030',
+  star:'#f5f911',
 }
 
 export const darkTheme = {
@@ -189,5 +190,6 @@ export const darkTheme = {
   overlay: 'rgba(0, 0, 0, 0.7)',   // Modal overlay
   overlayLight: 'rgba(0, 0, 0, 0.5)', // Light overlay
   overlayDark: 'rgba(0, 0, 0, 0.8)',
-  title:'#c60030'
+  title:'#c60030',
+  star:'#f5f911'
 }

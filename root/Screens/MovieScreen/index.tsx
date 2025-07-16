@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { useSelector } from 'react-redux';
 import BackButton from '../../../components/BackButton';
+import Button from '../../../components/Button';
 import HeartButton from '../../../components/HeartButton';
+import ReviewCard from '../../../components/ReviewCard';
 import { CastData } from '../../../constants/Cast';
 import type { RootState } from '../../../store';
 import { CastItemTypes } from '../../../types';
@@ -20,11 +23,11 @@ import {
   HeartPosition,
   InfoContainer,
   MovieInfoContainer,
+  // NoReviews,
+  // NoReviewsText,
   PlayButtonContainer,
   PosterImage,
   ReleaseDateText,
-  ReviewButtonContainer,
-  ReviewButtonText,
   ReviewsContainer,
   ReviewTitle,
   SafeArea,
@@ -42,6 +45,8 @@ const MovieScreen = () => {
   
   const { selectedMovie } = useSelector((state:RootState) => state.movie)
   const { colors } = useSelector((state:RootState) => state.theme)
+
+  const router = useRouter()
 
    const renderItem = ({ item }: { item: CastItemTypes }) => {
     return (
@@ -101,13 +106,30 @@ const MovieScreen = () => {
               reviewTitle={colors.text}>
                 Reviews
               </ReviewTitle>
-              <ReviewButtonContainer>
-                <Ionicons name='add' size={10} color='white'/>
+              {/* <ReviewButtonContainer
+              onPress={()=>{
+                router.push('/(stack)/Superman')
+              }}>
+                <Ionicons name='add' size={18} color='white'/>
                 <ReviewButtonText>
                   Add Review
                 </ReviewButtonText>
-              </ReviewButtonContainer>
+              </ReviewButtonContainer> */}
+              <Button
+               background={colors.title}
+               textColor='white'
+               iconName='add'
+               onPress={()=>{router.push(`/(stack)/${selectedMovie?.title}`)}}
+               buttonText='Add Review'/>
              </ReviewsContainer>
+             {/* <NoReviews>
+              <NoReviewsText
+              nullReview={colors.textDisabled}>
+                No Reviews Yet
+              </NoReviewsText>
+             </NoReviews> */}
+              <ReviewCard/>
+              <ReviewCard/>
           </AboutContainer>
 
           <MovieInfoContainer>

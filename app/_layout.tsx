@@ -18,6 +18,7 @@ export default function RootLayout() {
     <PaperProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(stack)" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBarController/>

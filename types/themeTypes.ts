@@ -65,6 +65,7 @@ export interface ThemeColors {
   overlayLight: string;
   overlayDark: string;
   title: string;
+  star: string
 }
 
 export interface ThemeState {

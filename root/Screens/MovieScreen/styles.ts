@@ -9,13 +9,15 @@ interface MovieStyleProps {
   aboutTitle?:string
   aboutDescription?:string
   starsTitle?:string
-  reviewTitle?:string
+  reviewTitle?:string,
+  nullReview?:string
 }
 
 
 export const SafeArea = styled(SafeAreaView)<MovieStyleProps>(props=>({
     flex: 1,
     paddingBottom:-50,
+
     ...(props.background && {
         backgroundColor: props.background
         })
@@ -167,8 +169,8 @@ export const ReviewsContainer = styled.View({
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
-    marginTop: 10,
-    backgroundColor:'yellow'
+    marginTop: 20,
+    // backgroundColor:'yellow'
 })
 
 export const ReviewTitle = styled.Text<MovieStyleProps>(props => ({
@@ -177,17 +179,32 @@ export const ReviewTitle = styled.Text<MovieStyleProps>(props => ({
     color:props.reviewTitle
 }))
 
-export const ReviewButtonContainer = styled.View({
-    padding:10,
+// export const ReviewButtonContainer = styled.TouchableOpacity({
+//     padding:10,
+//     alignItems:'center',
+//     backgroundColor:'#c60030',
+//     flexDirection:'row',
+//     justifyContent:'center',
+//     borderRadius:20
+// })
+
+// export const ReviewButtonText = styled.Text({
+//     fontSize:14,
+//     fontWeight:'400',
+//     color:'white'
+// })
+
+export const NoReviews = styled.View({
+    padding:20,
     alignItems:'center',
-    backgroundColor:'#c60030',
-    flexDirection:'row',
     justifyContent:'center',
-    borderRadius:20
+    marginTop:10
+    // backgroundColor:'yellow'
 })
 
-export const ReviewButtonText = styled.Text({
-    fontSize:14,
-    fontWeight:'400',
-    color:'white'
-})
+export const NoReviewsText = styled.Text<MovieStyleProps>(props=> ({
+        fontSize:24,
+        fontWeight:'bold',
+        fontStyle:'italic',
+        color:props.nullReview
+}))
