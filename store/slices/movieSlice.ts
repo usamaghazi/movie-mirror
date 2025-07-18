@@ -35,6 +35,7 @@ export const fetchingMovies = createAsyncThunk(
                                 return movies.map((movie:any) =>{
                                     const posterUrl = getPosterImage(movie.poster_path)
                                     const backgroundUrl = getBackgroundImage(movie.backdrop_path)
+                                    // console.log('link',backgroundUrl)
                                     return {
                                         ...movie,
                                         backdrop_path: backgroundUrl,

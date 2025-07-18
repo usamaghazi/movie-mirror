@@ -1,17 +1,22 @@
 
 
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Appbar, Switch } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Ionicons } from '@expo/vector-icons';
 import { fontStyles } from '../../constants/Fonts';
+import type { RootState } from '../../store';
 import { toggleTheme } from '../../store/slices/themeSlice';
-import { ModeText, ModeWrapper } from './styles';
+import { Favourite, ModeText, ModeWrapper } from './styles';
 
 const Header: React.FC = () => {
 
-      const dispatch = useDispatch();
-      const { colors, isDark } = useSelector((state:any) => state.theme)
+      const dispatch = useDispatch()
+      const { colors, isDark } = useSelector((state:RootState) => state.theme)
+
+      const router = useRouter()
   return (
         <Appbar.Header
         style={{ 
@@ -27,6 +32,13 @@ const Header: React.FC = () => {
               fontWeight:'900',
               fontFamily:fontStyles.pacifico}}/>
 
+              <Favourite onPress={()=>{router.push('/(stack)/favourite')}}>
+              <Ionicons 
+              name="heart-outline"
+              size={24}
+              color={colors.text}
+              />
+              </Favourite>
 
               <ModeWrapper>
                 <ModeText

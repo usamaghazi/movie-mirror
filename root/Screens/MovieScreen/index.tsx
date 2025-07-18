@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import HeartButton from '../../../components/HeartButton';
 import ReviewCard from '../../../components/ReviewCard';
 import { CastData } from '../../../constants/Cast';
 import type { RootState } from '../../../store';
+import { useAppDispatch } from '../../../store';
+import { favouriteTrue, favouritFalse, toggleFavouriteState } from '../../../store/slices/favouriteMovieSlice';
 import { CastItemTypes } from '../../../types';
 import {
   AboutContainer,
@@ -25,8 +27,6 @@ import {
   MovieInfoContainer,
   NoReviews,
   NoReviewsText,
-  // NoReviews,
-  // NoReviewsText,
   PlayButtonContainer,
   PosterImage,
   ReleaseDateText,
@@ -48,12 +48,30 @@ const MovieScreen = () => {
   const { selectedMovie } = useSelector((state:RootState) => state.movie)
   const { colors } = useSelector((state:RootState) => state.theme)
   const { userReview } = useSelector((state:RootState) => state.form)
+  const { favouriteMovies } = useSelector((state:RootState) => state.favouriteMovie)
+
+  const dispatch = useAppDispatch()
+  const router = useRouter()
+  
   
   const filterReviews = userReview.length > 0 ?  userReview.filter(review =>{
       return review.movieName === selectedMovie?.title
   }): []
 
-  const router = useRouter()
+  const filterFavouritMovies = favouriteMovies.length > 0 ? 
+                                favouriteMovies.filter(movies => {
+                                  return movies.title === selectedMovie?.title
+                                }): []
+  
+
+      useEffect(()=>{
+        if(filterFavouritMovies.length > 0 && filterFavouritMovies[0]?.isFavourite){
+          dispatch(favouriteTrue())
+      }
+      else{
+        dispatch(favouritFalse())
+      }
+      },[filterFavouritMovies,dispatch])
 
    const renderItem = ({ item }: { item: CastItemTypes }) => {
     return (
@@ -113,15 +131,7 @@ const MovieScreen = () => {
               reviewTitle={colors.text}>
                 Reviews
               </ReviewTitle>
-              {/* <ReviewButtonContainer
-              onPress={()=>{
-                router.push('/(stack)/Superman')
-              }}>
-                <Ionicons name='add' size={18} color='white'/>
-                <ReviewButtonText>
-                  Add Review
-                </ReviewButtonText>
-              </ReviewButtonContainer> */}
+
               <Button
                background={colors.title}
                textColor='white'
@@ -129,14 +139,7 @@ const MovieScreen = () => {
                onPress={()=>{router.push(`/(stack)/${selectedMovie?.title}`)}}
                buttonText='Add Review'/>
              </ReviewsContainer>
-             {/* <NoReviews>
-              <NoReviewsText
-              nullReview={colors.textDisabled}>
-                No Reviews Yet
-              </NoReviewsText>
-             </NoReviews> */}
-              {/* <ReviewCard/>
-              <ReviewCard/> */}
+             
 
               {
                 filterReviews.length > 0 ? (
@@ -175,10 +178,21 @@ const MovieScreen = () => {
                 </InfoContainer>
              </MovieInfoContainer>
             
-           
+                  
 
-           <HeartPosition>
-            <HeartButton/>
+           <HeartPosition onPress={()=>{
+            dispatch(toggleFavouriteState(selectedMovie))
+           }}>
+            {
+              filterFavouritMovies.length > 0 ? (
+                <HeartButton
+                isFavourite={true}/>
+              ):(
+                <HeartButton
+                isFavourite={false}/>
+              )
+            }
+            
            </HeartPosition>
 
            <BackPosition>

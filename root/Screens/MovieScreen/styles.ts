@@ -39,7 +39,7 @@ export const GradientOverlayBackDrop = styled.View({
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
 })
 
-export const HeartPosition = styled.View({
+export const HeartPosition = styled.TouchableOpacity({
     position: 'absolute', 
     top: 18, 
     right: 18, 

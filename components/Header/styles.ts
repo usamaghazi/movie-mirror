@@ -21,3 +21,10 @@ export const ModeText = styled.Text<ModeTextProps>(props =>({
     })
 }))
 
+export const Favourite = styled.TouchableOpacity({
+      alignItems:'center',
+      justifyContent:'center',
+      paddingTop:5,
+      marginRight:10
+})
+
