@@ -21,7 +21,7 @@ export default function TabsLayout(){
             options={{
 
                 tabBarLabel:({ focused })=><CustomLabel 
-                label="Home" 
+                label="Movies" 
                 focused={focused}
                 inactiveLabel={colors.textSecondary}/>,
 
