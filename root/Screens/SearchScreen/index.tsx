@@ -1,11 +1,12 @@
 import Input from '@/components/Input'
 import React from 'react'
-import { ActivityIndicator, Dimensions, FlatList, Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList } from 'react-native'
 
 import Header from '../../../components/Header'
 // import MoviePoster from '../../../components/MoviePoster'
+import MoviePoster from '@/components/MoviePoster'
 import { useSearchMovies } from '../../../hooks/useSearchMovies'
-import { Container, Heading, InputContainer, LoadingContainer, SafeArea } from './styles'
+import { Heading, InputContainer, LoadingContainer, NoMoviesFound, NoMoviesFoundContainer, RenderFooterContainer, SafeArea, SearchMoviesContainer } from './styles'
 
 const { width } = Dimensions.get('window')
 
@@ -15,10 +16,23 @@ const SearchScreen = () => {
             movieName,
             loading,
             searchResults,
+            loadingMore,
+            loadMoreMovies,
             setMovieName } = useSearchMovies()
+  
+      const renderFooter = () => {
+        if(!loadingMore) return null
 
-    // const hasMovies = searchResults.length > 0
-    // const shouldShowLoading = loading || !hasMovies
+        return (
+            <RenderFooterContainer>
+                <ActivityIndicator color={colors.title} size={'large'}/>
+            </RenderFooterContainer>
+        )
+      }
+
+      const handleEndReached = () => {
+            loadMoreMovies()
+        }
 
   return (
         <SafeArea 
@@ -27,7 +41,7 @@ const SearchScreen = () => {
 
             <Header/>
 
-        <Container>
+        <>
             <Heading 
             textColor={colors.text}>
                 What you like to Watch
@@ -45,29 +59,33 @@ const SearchScreen = () => {
                     <ActivityIndicator color={colors.title} size={'large'}/>
                 </LoadingContainer>
             ): searchResults.length > 0 ?(
-                // <SearchMoviesContainer>
+                <SearchMoviesContainer>
                 <FlatList
-                style={{marginBottom:180}}
+                style={{marginBottom:200}}
+                keyboardShouldPersistTaps="handled"
                 data={searchResults}
+                onEndReached={handleEndReached}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={renderFooter}
                 renderItem={({item,index}) => (
-                //   <MoviePoster
-                //   key={index}
-                //   item={item}
-                //   index={index}/>
-                <TouchableOpacity
-                style={{margin:8}}
-                key={index}
-                onPress={()=>{console.log('pRESSSSSSSSS')}}>
-                    <Text>
-                        {item.title}
-                    </Text>
-                </TouchableOpacity>
+                  <MoviePoster
+                  key={index}
+                  item={item}
+                  index={index}/>
                 )}
                 keyExtractor={(_,index)=>index.toString()}
                 showsVerticalScrollIndicator={false}/>
-                // </SearchMoviesContainer>
-            ): null}
-        </Container>
+                
+                 </SearchMoviesContainer>
+            ): movieName.trim() ? (
+                    <NoMoviesFoundContainer>
+                        <NoMoviesFound
+                        textColor={colors.text}>
+                            No movies found for "{movieName}"
+                        </NoMoviesFound>
+                    </NoMoviesFoundContainer>
+                ) : null}
+        </>
 
         </SafeArea>
   )

@@ -16,7 +16,7 @@ export const Container = styled.View({
 
 export const Heading = styled.Text<SearchScreenStyleProps>(props => ({
     marginTop:20,
-    // alignSelf:'center',
+    alignSelf:'center',
     fontSize:24,
     fontWeight:'bold',
     color:props.textColor
@@ -24,7 +24,7 @@ export const Heading = styled.Text<SearchScreenStyleProps>(props => ({
 
 export const InputContainer = styled.View({
     marginTop:10,
-    // alignItems:'center'
+    alignItems:'center'
 })
 
 export const LoadingContainer = styled.View({
@@ -32,6 +32,26 @@ export const LoadingContainer = styled.View({
 })
 
 export const SearchMoviesContainer = styled.View({
-    flex:1,
-    marginBottom:50
+    alignSelf:'center',
+})
+
+export const NoMoviesFoundContainer = styled.View({
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center'
+})
+
+export const NoMoviesFound = styled.Text<SearchScreenStyleProps>(props => ({
+        fontSize:22,
+        fontWeight:'bolder',
+        fontStyle:'italic',
+        color: props.textColor,
+        // marginBottom:70
+}))
+
+export const RenderFooterContainer = styled.View({
+    paddingTop:20,
+    paddingBottom:20,
+    alignItems:'center',
+    // marginBottom:200
 })

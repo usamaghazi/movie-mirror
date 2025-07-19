@@ -13,6 +13,9 @@ export const useSearchMovies = () => {
     const [movieName, setMovieName] = useState<string>('')
     const [searchResults, setSearchResults] = useState<SearchMovie[]|[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+    const [loadingMore, setLoadingMore] = useState<boolean>(false)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [totalPages, setTotalPages] = useState<number>(1)
 
     const { colors } = useSelector((state:RootState) => state.theme)
 
@@ -20,9 +23,11 @@ export const useSearchMovies = () => {
         const delayedSearc = setTimeout(()=>{
             if(movieName.trim()===""){
                 setSearchResults([])
+                setCurrentPage(1)
+                setTotalPages(1)
             }
             else{
-                searchMovies(movieName)
+                searchMovies(movieName, 1)
             }
         },500)
 
@@ -30,18 +35,26 @@ export const useSearchMovies = () => {
 
     },[movieName])
 
-    const searchMovies = async (query:string) => {
+    const searchMovies = async (query:string, page:number, isLoadMore:boolean=false) => {
             if(!query.trim()) return
-            setLoading(true)
+
+            if(isLoadMore){
+                setLoadingMore(true)
+            }else{
+                setLoading(true)
+                setCurrentPage(1)    
+            }
+            
             try {
+                console.log(`This is my api.....${SEARCH_BASE_URL}/search/movie?api_key=${api_key}&query=${encodeURIComponent(query)}&page=${page}`)
                 const response = await fetch(
-                    `${SEARCH_BASE_URL}/search/movie?api_key=${api_key}&query=${encodeURIComponent(query)}`
+                    `${SEARCH_BASE_URL}/search/movie?api_key=${api_key}&query=${encodeURIComponent(query)}&page=${page}`
                 )
                 if(!response.ok){
                     throw new Error('Something Went Wrong')
                 }
                 const data = await response.json()
-                console.log('Moviesss', data.results)
+                // console.log('Moviesss', data.results)
 
                 const processMovies = (movies:any) => {
                    return movies.map((movie:any) =>{
@@ -55,14 +68,31 @@ export const useSearchMovies = () => {
                     })
                 }
                 const processData = processMovies(data.results)
-                setSearchResults(processData)
+                if(isLoadMore){
+                    console.log('isLoadMore...', ...processData)
+                    setSearchResults(preResults => [...preResults, ...processData])
+                }else{
+                    console.log('WithoutisLoadMore...', processData)
+                    setSearchResults(processData)
+                }
+
+                setCurrentPage(page)
+                setTotalPages(data.total_pages)
             } catch (error) {
                 console.log('Search Error', error)
                 setSearchResults([])
 
             } finally {
                 setLoading(false)
+                setLoadingMore(false)
             }
+    }
+
+    const loadMoreMovies = () => {
+        if(!loadingMore && currentPage < totalPages && movieName.trim()){
+            const nextPage = currentPage + 1
+            searchMovies(movieName, nextPage, true)
+        }
     }
 
     return {
@@ -70,7 +100,11 @@ export const useSearchMovies = () => {
         colors,
         searchResults,
         loading,
+        loadingMore,
+        currentPage,
+        totalPages,
         
-        setMovieName
+        setMovieName,
+        loadMoreMovies
     }
 }
