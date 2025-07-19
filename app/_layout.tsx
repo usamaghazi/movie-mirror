@@ -1,9 +1,11 @@
 import { Stack } from 'expo-router';
 import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import Loader from '../components/Loader';
 import StatusBarController from '../components/StatusBarController';
 import { useCustomFonts } from '../constants/Fonts';
-import store from '../store';
+import store, { persistor } from '../store';
 
 
 
@@ -15,6 +17,7 @@ export default function RootLayout() {
   
   return (
     <Provider store={store}>
+      <PersistGate loading={<Loader/>} persistor={persistor}>
     <PaperProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -23,6 +26,7 @@ export default function RootLayout() {
       </Stack>
       <StatusBarController/>
     </PaperProvider>
+    </PersistGate>
     </Provider>
   );
 }

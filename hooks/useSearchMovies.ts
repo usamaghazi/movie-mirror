@@ -46,7 +46,6 @@ export const useSearchMovies = () => {
             }
             
             try {
-                console.log(`This is my api.....${SEARCH_BASE_URL}/search/movie?api_key=${api_key}&query=${encodeURIComponent(query)}&page=${page}`)
                 const response = await fetch(
                     `${SEARCH_BASE_URL}/search/movie?api_key=${api_key}&query=${encodeURIComponent(query)}&page=${page}`
                 )
@@ -54,7 +53,7 @@ export const useSearchMovies = () => {
                     throw new Error('Something Went Wrong')
                 }
                 const data = await response.json()
-                // console.log('Moviesss', data.results)
+                
 
                 const processMovies = (movies:any) => {
                    return movies.map((movie:any) =>{
@@ -69,10 +68,8 @@ export const useSearchMovies = () => {
                 }
                 const processData = processMovies(data.results)
                 if(isLoadMore){
-                    console.log('isLoadMore...', ...processData)
                     setSearchResults(preResults => [...preResults, ...processData])
                 }else{
-                    console.log('WithoutisLoadMore...', processData)
                     setSearchResults(processData)
                 }
 
