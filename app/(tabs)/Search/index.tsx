@@ -1,12 +1,8 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import SearchScreen from '../../../root/Screens/SearchScreen'
 
 const Search = () => {
-  return (
-    <View>
-      <Text>Search</Text>
-    </View>
-  )
+  return <SearchScreen/>
 }
 
 export default Search

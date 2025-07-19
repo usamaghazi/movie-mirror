@@ -9,12 +9,14 @@ const MoviePoster:React.FC<MoviePosterTypes> = ({
     item,
     index
 }) => {
+    console.log('Movie Poster open...')
     const dispatch = useAppDispatch();
     const router = useRouter()
   return (
     <PosterCardContainer 
     activeOpacity={0.6}
     onPress={()=>{
+        console.log('Pressssssssed')
         dispatch(setSelectedMovie(item))
         router.push('/(tabs)/Home/[movie]')
     }}>

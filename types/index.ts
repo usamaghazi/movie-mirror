@@ -8,6 +8,7 @@ export * from './MoviePostertypes';
 export * from './movietypes';
 export * from './ReviewCardtypes';
 export * from './ReviewFormtypes';
+export * from './SearchScreentypes';
 export * from './SubCarouseltypes';
 export * from './themeTypes';
 

@@ -11,7 +11,7 @@ export const Label = styled.Text<InputStyleProps>(props => ({
 
 export const InputText = styled.TextInput<InputStyleProps>(props => ({
     borderWidth:1,
-    borderColor:props.border,
+    borderColor:props.isFocused ? '#fa7f04':props.border,
     paddingTop:10,
     paddingLeft:10,
     paddingRight:10,
@@ -22,6 +22,10 @@ export const InputText = styled.TextInput<InputStyleProps>(props => ({
     fontSize: 16,
     borderRadius:7,
     marginTop:10,
+
+    ...(props.width && {
+        width:props.width
+    }),
 
     ...(props.nullishName || props.nullishReview ? {
         borderColor:props.borderWarn
