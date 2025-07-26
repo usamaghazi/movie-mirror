@@ -18,7 +18,7 @@ export const useReviewForm = () => {
 
   const { colors } = useSelector((state: RootState) => state.theme);
   const { stars } = useSelector((state: RootState) => state.form);
-  const { selectedMovie } = useSelector((state:RootState) => state.movie)
+  const { selectedMovie } = useSelector((state:RootState) => state.form)
   const dispatch = useAppDispatch();
   const router = useRouter()
 

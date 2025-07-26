@@ -1,4 +1,4 @@
-import { setSelectedMovie } from '@/store/slices/movieSlice';
+import { setSelectedMovie } from '@/store/slices/formSlice';
 import { useRouter } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import {

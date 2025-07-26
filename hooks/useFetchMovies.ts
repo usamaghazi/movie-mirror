@@ -6,10 +6,10 @@ import { getBackgroundImage, getPosterImage } from '../utils'
 
 const api_key = Constant.expoConfig?.extra?.TMDB_API_KEY
 
-export const useMovie = () => {
-    const [popular, setPopular] = useState<Movie[]>([])
-    const [trending, setTrending] = useState<Movie[]>([])
-    const [topRated, setTopRated] = useState<Movie[]>([])
+export const useFetchMovies = () => {
+    const [popularMovies, setPopularMovies] = useState<Movie[]>([])
+    const [trendingMovies, setTrendingMovies] = useState<Movie[]>([])
+    const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<null | Record<string, any> | string>(null)
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
@@ -48,30 +48,30 @@ export const useMovie = () => {
             }
 
             // Set each category separately
-            setPopular(processMovies(popularData.results))
-            setTrending(processMovies(trendingData.results))
-            setTopRated(processMovies(topRatedData.results))
+            setPopularMovies(processMovies(popularData.results))
+            setTrendingMovies(processMovies(trendingData.results))
+            setTopRatedMovies(processMovies(topRatedData.results))
             setLoading(false)
 
         } catch (error) {
-            setPopular([])
-            setTrending([])
-            setTopRated([])
+            setPopularMovies([])
+            setTrendingMovies([])
+            setTopRatedMovies([])
             setLoading(false)
             setError(error instanceof Error ? error.message : 'Unknown error')
         }
     }, [])
 
     return {
-        popular,
-        trending,
-        topRated,
+        popularMovies,
+        trendingMovies,
+        topRatedMovies,
         loading,
         error,
         selectedMovie,
-        setPopular,
-        setTrending,
-        setTopRated,
+        setPopularMovies,
+        setTrendingMovies,
+        setTopRatedMovies,
         setSelectedMovie,
         fetchingMovies
     }

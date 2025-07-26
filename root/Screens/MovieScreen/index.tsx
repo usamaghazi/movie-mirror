@@ -45,7 +45,7 @@ const { width: screenWidth } = Dimensions.get('window');
 
 const MovieScreen = () => {
   
-  const { selectedMovie } = useSelector((state:RootState) => state.movie)
+  const { selectedMovie } = useSelector((state:RootState) => state.form)
   const { colors } = useSelector((state:RootState) => state.theme)
   const { userReview } = useSelector((state:RootState) => state.form)
   const { favouriteMovies } = useSelector((state:RootState) => state.favouriteMovie)

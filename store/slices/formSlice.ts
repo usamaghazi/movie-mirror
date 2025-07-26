@@ -3,7 +3,9 @@ import { ReviewFormTypes } from '../../types'
 
 const initialState: ReviewFormTypes = {
      stars: ["star", "star-outline", "star-outline", "star-outline", "star-outline"],
-     userReview:[]
+     userReview:[],
+     selectedMovie:null
+
 }
 
 const formSlice = createSlice({
@@ -23,6 +25,9 @@ const formSlice = createSlice({
                     state.stars[countOutline] = "star-outline"
             }
         },
+        setSelectedMovie: (state, action) => {
+                        state.selectedMovie = action.payload
+                },
 
         addUserReview:(state,action)=>{
             state.userReview.push(action.payload)
@@ -37,5 +42,5 @@ const formSlice = createSlice({
     }
 })
 
-export const { rateCount, addUserReview, deleteUserReview } = formSlice.actions
+export const { rateCount, addUserReview, deleteUserReview, setSelectedMovie } = formSlice.actions
 export default formSlice.reducer

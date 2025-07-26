@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { useAppDispatch } from '../../store'
-import { setSelectedMovie } from '../../store/slices/movieSlice'
+import { setSelectedMovie } from '../../store/slices/formSlice'
 import { MoviePosterTypes } from '../../types'
 import { InfoRow, Overlay, OverlayContent, PosterCard, PosterCardContainer, PosterImage, Rating, RatingContainer, Star, Title, Year } from './styles'
 

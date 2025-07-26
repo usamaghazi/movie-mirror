@@ -10,7 +10,7 @@ interface HeartButtonProps {
 const HeartButton:React.FC <HeartButtonProps> = ({
     isFavourite
 }) => {
-    const { selectedMovie } = useSelector((state:RootState) => state.movie)
+    const { selectedMovie } = useSelector((state:RootState) => state.form)
     const { colors } = useSelector((state:RootState)=> state.theme)
 console.log('HeartButton rendered, isFavorited:', isFavourite)
   return (

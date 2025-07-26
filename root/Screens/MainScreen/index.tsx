@@ -1,4 +1,5 @@
 
+import { useFetchMovies } from '@/hooks/useFetchMovies';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -7,7 +8,6 @@ import MovieCarousel from '../../../components/MovieCarousel';
 import SubCarousel from '../../../components/SubCarousel';
 import type { RootState } from '../../../store';
 import { useAppDispatch } from '../../../store';
-import { fetchingMovies } from '../../../store/slices/movieSlice';
 import {
   LoadContainer,
   MovieCarouselContainer,
@@ -20,13 +20,20 @@ import {
 
 const MainScreen = () => {
 
+  const {  popularMovies,
+           trendingMovies,
+           topRatedMovies,
+           loading,
+           fetchingMovies
+           } = useFetchMovies()
+
   const dispatch = useAppDispatch()
   const { colors } = useSelector((state:RootState) => state.theme)
-  const { movies, loading , error } = useSelector((state:RootState) => state.movie)
+  // const { movies, loading , error } = useSelector((state:RootState) => state.movie)
 
-  const popularMovies = movies.popular
-  const trendingMovies = movies.trending
-  const topRatedMovies = movies.topRated
+  // const popularMovies = movies.popular
+  // const trendingMovies = movies.trending
+  // const topRatedMovies = movies.topRated
 
   const hasMovies = popularMovies.length > 0 ||
                     trendingMovies.length > 0 ||
@@ -34,7 +41,8 @@ const MainScreen = () => {
   const shouldShowLoading = loading || !hasMovies;
 
   useEffect(()=>{
-    dispatch(fetchingMovies())
+    // dispatch(fetchingMovies())
+    fetchingMovies()
   },[])
   
   return (

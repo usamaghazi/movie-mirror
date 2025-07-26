@@ -10,7 +10,7 @@ import {
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import { useAppDispatch } from '../../store';
-import { setSelectedMovie } from '../../store/slices/movieSlice';
+import { setSelectedMovie } from '../../store/slices/formSlice';
 import { Movie } from '../../types';
 import {
   Category,
