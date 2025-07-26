@@ -5,38 +5,39 @@ import { persistReducer, persistStore } from 'redux-persist'
 
 import favouriteMovieReducer from './slices/favouriteMovieSlice'
 import formReducer from './slices/formSlice'
-import movieReducer from './slices/movieSlice'
+// import movieReducer from './slices/movieSlice'
 import themeReducer from './slices/themeSlice'
 
-const themePersistConfig = {
-  key: 'theme',
+const persistConfig = {
+  key: 'key',
   storage: AsyncStorage,
 }
 
-const formPersistConfig = {
-  key: 'form',
-  storage: AsyncStorage,
+// const formPersistConfig = {
+//   key: 'form',
+//   storage: AsyncStorage,
   
-}
+// }
 
-const favouriteMoviePersistConfig = {
-  key: 'favouriteMovie',
-  storage: AsyncStorage,
-}
+// const favouriteMoviePersistConfig = {
+//   key: 'favouriteMovie',
+//   storage: AsyncStorage,
+// }
 
-const persistedThemeReducer = persistReducer(themePersistConfig, themeReducer)
-const persistedFormReducer = persistReducer(formPersistConfig, formReducer)
-const persistedFavouriteMovieReducer = persistReducer(favouriteMoviePersistConfig, favouriteMovieReducer)
+// const persistedThemeReducer = persistReducer(themePersistConfig, themeReducer)
+// const persistedFormReducer = persistReducer(formPersistConfig, formReducer)
+// const persistedFavouriteMovieReducer = persistReducer(favouriteMoviePersistConfig, favouriteMovieReducer)
 
 const rootReducer = combineReducers({
-  theme: persistedThemeReducer,
-  movie: movieReducer, 
-  form: persistedFormReducer,
-  favouriteMovie: persistedFavouriteMovieReducer
+  theme: themeReducer,
+  form: formReducer,
+  favouriteMovie: favouriteMovieReducer
 })
 
+const persistedRootReducer = persistReducer(persistConfig, rootReducer)
+
 const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedRootReducer,
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
